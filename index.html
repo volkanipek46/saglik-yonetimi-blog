@@ -33,6 +33,67 @@
     --card-bg: #faf7f2;
   }
 
+  body.dark-mode {
+    --ink: #e8e0d0;
+    --paper: #0f1923;
+    --cream: #1a2535;
+    --muted: #9a9080;
+    --border: rgba(232,224,208,0.12);
+    --card-bg: #162030;
+  }
+
+  /* İLERLEME ÇUBUĞU */
+  #progress-bar {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--rust);
+    z-index: 999;
+    transition: width 0.1s linear;
+  }
+
+  /* BAŞA DÖN BUTONU */
+  #back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 46px;
+    height: 46px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: opacity 0.3s;
+  }
+
+  #back-to-top:hover { opacity: 0.8; }
+
+  /* KARANLIK MOD BUTONU */
+  #dark-mode-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--paper);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  #dark-mode-btn:hover { background: rgba(255,255,255,0.2); }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   html { scroll-behavior: smooth; }
@@ -836,9 +897,42 @@
     <li><a href="#yazi">İlk Yazı</a></li>
     <li><a href="#hakkinda">Hakkında</a></li>
   </ul>
+  <button id="dark-mode-btn" onclick="toggleDark()">🌙 Karanlık</button>
 </nav>
 
-<!-- HERO -->
+<!-- İLERLEME ÇUBUĞU -->
+<div id="progress-bar"></div>
+
+<!-- BAŞA DÖN -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+    const btn = document.getElementById('back-to-top');
+    btn.style.display = scrollTop > 400 ? 'flex' : 'none';
+  });
+
+  function toggleDark() {
+    document.body.classList.toggle('dark-mode');
+    const btn = document.getElementById('dark-mode-btn');
+    if (document.body.classList.contains('dark-mode')) {
+      btn.textContent = '☀️ Aydınlık';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      btn.textContent = '🌙 Karanlık';
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('dark-mode-btn').textContent = '☀️ Aydınlık';
+  }
+</script>
 <header class="hero-band">
   <p class="hero-tag">Sağlık Yönetimi · Akademik Blog Platformu</p>
   <h1 class="hero-title">Sağlığı<em> yönetmek</em><br>bir bilim, bir sanat.</h1>
