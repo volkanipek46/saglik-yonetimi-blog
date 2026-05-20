@@ -873,16 +873,77 @@
     .article-wrapper { grid-template-columns: 1fr; }
     .sidebar { position: static; }
     .calendar-grid { grid-template-columns: repeat(2, 1fr); }
-    .names-grid { grid-template-columns: repeat(3, 1fr); }
     .audience-grid { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-title { font-size: 2.5rem; }
+    .article-title { font-size: 1.6rem; }
+    .section-title { font-size: 1.5rem; }
   }
 
   @media (max-width: 600px) {
+    /* NAV */
+    .masthead { padding: 0 1rem; height: 52px; }
     .masthead-nav { display: none; }
-    .hero-stats { gap: 1.5rem; }
+    #dark-mode-btn { font-size: 0.7rem; padding: 0.25rem 0.6rem; }
+
+    /* HERO */
+    .hero-band { padding: 3rem 1rem 2.5rem; }
+    .hero-title { font-size: 2rem; }
+    .hero-sub { font-size: 0.88rem; }
+    .hero-stats { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+    .hero-stat-num { font-size: 1.6rem; }
+
+    /* GENEL */
+    .container { padding: 0 1rem; }
+    .section { padding: 2.5rem 0; }
+    .section-title { font-size: 1.3rem; }
+
+    /* TAKVİM */
     .calendar-grid { grid-template-columns: 1fr; }
-    .names-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* MAKALE */
+    .article-title { font-size: 1.4rem; line-height: 1.2; }
+    .article-lead { font-size: 0.95rem; padding: 0.8rem 1rem; }
+    .article-section-title { font-size: 1.05rem; }
+    .article-body p { font-size: 0.9rem; }
+    .data-box { padding: 1rem; }
+    .data-row { font-size: 0.78rem; flex-direction: column; gap: 0.2rem; padding: 0.5rem 0; }
+    .data-val { font-size: 1rem; }
+
+    /* SIDEBAR */
+    .sidebar-block { margin-bottom: 1rem; }
+
+    /* KATEGORİLER */
+    .categories-grid { grid-template-columns: 1fr 1fr; }
+    .cat-card { padding: 1.2rem 1rem; }
+    .cat-icon { font-size: 1.4rem; }
+    .cat-name { font-size: 0.9rem; }
+    .cat-desc { font-size: 0.75rem; }
+
+    /* HAKKIMDA & İLETİŞİM */
+    div[style*="grid-template-columns: 1fr 1fr"] {
+      display: block !important;
+    }
+    div[style*="grid-template-columns: 1fr 1fr"] > div:first-child {
+      margin-bottom: 2rem;
+    }
+
+    /* FOOTER */
+    .footer-inner { padding-bottom: 1.5rem; }
+    .footer-brand { font-size: 1.3rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+    /* BAŞA DÖN */
+    #back-to-top { bottom: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
+
+    /* TICKER */
+    .ticker-inner { font-size: 0.7rem; }
+  }
+
+  @media (max-width: 380px) {
+    .hero-title { font-size: 1.7rem; }
+    .categories-grid { grid-template-columns: 1fr; }
+    .article-title { font-size: 1.2rem; }
   }
 </style>
 </head>
