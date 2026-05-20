@@ -940,12 +940,240 @@
     .ticker-inner { font-size: 0.7rem; }
   }
 
-  @media (max-width: 380px) {
-    .hero-title { font-size: 1.7rem; }
-    .categories-grid { grid-template-columns: 1fr; }
-    .article-title { font-size: 1.2rem; }
+  /* HAMBURGER MENÜ */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
   }
-</style>
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--paper);
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 52px;
+    left: 0;
+    right: 0;
+    background: var(--ink);
+    z-index: 98;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--rust);
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu a {
+    display: block;
+    padding: 0.75rem 2rem;
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.2s;
+  }
+  .mobile-menu a:hover { background: rgba(255,255,255,0.08); }
+
+  /* ARAMA ÇUBUĞU */
+  .search-wrapper {
+    background: var(--cream);
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .search-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .search-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    border-radius: 2px;
+  }
+  .search-input:focus { border-color: var(--rust); }
+  .search-btn {
+    padding: 0.7rem 1.2rem;
+    background: var(--rust);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    border-radius: 2px;
+  }
+  .search-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* YAZI KARTLARI */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .post-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .post-card-top {
+    background: var(--ink);
+    padding: 1.2rem;
+    flex-shrink: 0;
+  }
+  .post-card-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .post-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--paper);
+    line-height: 1.3;
+  }
+  .post-card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
+  .post-card-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(26,107,107,0.1);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 0.6rem;
+  }
+  .post-card-excerpt {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .post-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  .post-card-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+  }
+  .post-card-read {
+    font-size: 0.72rem;
+    color: var(--rust);
+    font-weight: 600;
+  }
+
+  /* PAYLAŞ BUTONU */
+  .share-buttons {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .share-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .share-btn:hover { opacity: 0.85; }
+  .share-twitter { background: #000; color: white; }
+  .share-whatsapp { background: #25D366; color: white; }
+  .share-copy { background: var(--ink); color: var(--paper); }
+
+  /* YAZI DETAY MODAL */
+  .post-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+  .post-modal.open { display: block; }
+  .post-modal-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 2.5rem;
+    position: relative;
+  }
+  .post-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 600px) {
+    .hamburger { display: flex; }
+    .masthead > ul.masthead-nav { display: none !important; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .search-inner { flex-wrap: wrap; }
+    .post-modal-inner { padding: 1.5rem 1rem; }
+  }
+
+  @media (min-width: 601px) and (max-width: 900px) {
+    .posts-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </head>
 <body>
 
@@ -958,8 +1186,22 @@
     <li><a href="#yazi">İlk Yazı</a></li>
     <li><a href="#hakkinda">Hakkında</a></li>
   </ul>
-  <button id="dark-mode-btn" onclick="toggleDark()">🌙 Karanlık</button>
+  <div style="display:flex;align-items:center;gap:0.8rem;">
+    <button id="dark-mode-btn" onclick="toggleDark()">🌙 Karanlık</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<!-- MOBİL MENÜ -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#kategoriler" onclick="closeMenu()">Kategoriler</a>
+  <a href="#takvim" onclick="closeMenu()">İçerik Takvimi</a>
+  <a href="#yazi" onclick="closeMenu()">İlk Yazı</a>
+  <a href="#diger-yazilar" onclick="closeMenu()">Tüm Yazılar</a>
+  <a href="#hakkinda" onclick="closeMenu()">Hakkında</a>
+</div>
 
 <!-- İLERLEME ÇUBUĞU -->
 <div id="progress-bar"></div>
