@@ -1235,6 +1235,75 @@
     document.body.classList.add('dark-mode');
     document.getElementById('dark-mode-btn').textContent = '☀️ Aydınlık';
   }
+
+  // HAMBURGERMENü
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('active');
+  }
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('active');
+  }
+
+  // ARAMA
+  function searchPosts() {
+    const query = document.getElementById('search-input').value.toLowerCase();
+    const cards = document.querySelectorAll('.post-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const title = card.querySelector('.post-card-title').textContent.toLowerCase();
+      const keywords = card.getAttribute('data-keywords') || '';
+      const excerpt = card.querySelector('.post-card-excerpt').textContent.toLowerCase();
+      if (title.includes(query) || keywords.includes(query) || excerpt.includes(query)) {
+        card.style.display = 'flex';
+        visible++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    document.getElementById('search-count').textContent = visible + ' yazı';
+  }
+
+  // YAZI KARTLARI - MODAL
+  const postTitles = [
+    "Türkiye'de Sağlık Sisteminin Yapısı ve Güncel Sorunlar",
+    "Şehir Hastaneleri: Devrim mi, Borç Tuzağı mı?",
+    "e-Nabız'dan Yapay Zeka'ya: Sağlıkta Dijital Dönüşüm",
+    "Staj Günlüğü: İlk Haftam Hastanede",
+    "SGK'nın Sürdürülebilirliği: Veriler Ne Söylüyor?",
+    "Hasta Hakları Kanunu: Kâğıtta mı, Pratikte mi?",
+    "Bu Haftanın Sağlık Haberleri Özeti",
+    "Sağlık Yönetimi Mezunu Ne İş Yapar?",
+    "Telemedicine: Türkiye'nin Geri Kaldığı Cephe"
+  ];
+
+  const postAnchors = ['#yazi','#yazi2','#yazi3','#yazi4','#yazi5','#yazi6','#yazi7','#yazi8','#yazi9'];
+
+  function openPost(index) {
+    const anchor = ['yazi','yazi2','yazi3','yazi4','yazi5','yazi6','yazi7','yazi8','yazi9'][index];
+    const target = document.getElementById(anchor) || document.querySelector('#diger-yazilar article:nth-child(' + index + ')');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      document.getElementById('diger-yazilar').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // PAYLAŞ
+  function sharePost(platform, title) {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(title + ' - Volkan İpek Sağlık Yönetimi Blog');
+    if (platform === 'twitter') {
+      window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
+    } else if (platform === 'whatsapp') {
+      window.open('https://wa.me/?text=' + text + '%20' + url, '_blank');
+    } else if (platform === 'copy') {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link kopyalandı!');
+      });
+    }
+  }
 </script>
 <header class="hero-band">
   <p class="hero-tag">Sağlık Yönetimi · Akademik Blog Platformu</p>
@@ -1465,6 +1534,161 @@
   </div>
 </section>
 
+<!-- SEARCH BAR -->
+<div class="search-wrapper">
+  <div class="search-inner">
+    <input class="search-input" id="search-input" type="text" placeholder="Yazılarda ara... (örn: SGK, dijital sağlık, staj)" oninput="searchPosts()">
+    <button class="search-btn" onclick="searchPosts()">🔍 Ara</button>
+    <span class="search-count" id="search-count">9 yazı</span>
+  </div>
+</div>
+
+<!-- YAZI KARTLARI -->
+<section class="section" id="yazilar" style="background:var(--paper);">
+  <div class="container">
+    <span class="section-label">04 · Tüm Yazılar</span>
+    <h2 class="section-title">Blog Yazıları</h2>
+    <div class="posts-grid" id="posts-grid">
+
+      <div class="post-card" onclick="openPost(0)" data-keywords="türkiye sağlık sistemi politika sgk reform yapı">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 01 · Nisan 2026</div>
+          <div class="post-card-title">Türkiye'de Sağlık Sisteminin Yapısı ve Güncel Sorunlar</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Sağlık Sistemleri</span>
+          <div class="post-card-excerpt">Sağlık ocağındaki bekleme sırası, şehir hastanesinin cam kulesinin gölgesinde uzuyor. Türkiye'nin sağlık sistemi, aynı anda hem gurur kaynağı hem de kronik çelişkiler yumağı.</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(1)" data-keywords="şehir hastaneleri köp devrim borç yatırım">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 02 · Nisan 2026</div>
+          <div class="post-card-title">Şehir Hastaneleri: Devrim mi, Borç Tuzağı mı?</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Hastane Yönetimi</span>
+          <div class="post-card-excerpt">Devasa cam kuleler, son teknoloji ameliyathaneler, binlerce yataklı kompleksler... Peki bu görkemli yapıların faturasını kim, nasıl ödeyecek?</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(2)" data-keywords="e-nabız dijital sağlık yapay zeka teknoloji dönüşüm">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 03 · Nisan 2026</div>
+          <div class="post-card-title">e-Nabız'dan Yapay Zeka'ya: Sağlıkta Dijital Dönüşüm</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Dijital Sağlık</span>
+          <div class="post-card-excerpt">Türkiye'nin dijital sağlık altyapısı gerçekten ne kadar ileri? Ve yapay zekanın sağlığa entegrasyonu nerede duruyor?</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(3)" data-keywords="staj hastane deneyim öğrenci günlük">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 04 · Nisan 2026</div>
+          <div class="post-card-title">Staj Günlüğü: İlk Haftam Hastanede</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Staj Deneyimi</span>
+          <div class="post-card-excerpt">Ders kitaplarında okuduğum her şeyin gerçek hayatta nasıl işlediğini görmek için sabırsızlanıyordum. Beklentilerim ile gerçekler arasındaki fark beklenenden büyüktü.</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(4)" data-keywords="sgk sürdürülebilirlik ekonomi bütçe prim">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 05 · Nisan 2026</div>
+          <div class="post-card-title">SGK'nın Sürdürülebilirliği: Veriler Ne Söylüyor?</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Sağlık Ekonomisi</span>
+          <div class="post-card-excerpt">Her yıl artan sağlık harcamaları, yaşlanan nüfus ve genişleyen kapsam. SGK'nın sağlık sigortası kolu gerçekten sürdürülebilir mi?</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(5)" data-keywords="hasta hakları kanun etik uygulama">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 06 · Nisan 2026</div>
+          <div class="post-card-title">Hasta Hakları Kanunu: Kâğıtta mı, Pratikte mi?</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Etik & Hasta Hakları</span>
+          <div class="post-card-excerpt">Teoride her hastanın bilgilendirilme, gizlilik ve itiraz hakkını güvence altına alıyor. Peki kaç hasta bu haklarının farkında?</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(6)" data-keywords="gündem sağlık haberleri haftalık özet">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 07 · Nisan 2026</div>
+          <div class="post-card-title">Bu Haftanın Sağlık Haberleri Özeti</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Gündem</span>
+          <div class="post-card-excerpt">Sağlık gündemi hiç durmaksızın akıyor. Bu köşede her hafta en önemli gelişmeleri derleyip kısa bir değerlendirmeyle sunuyorum.</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(7)" data-keywords="kariyer mezuniyet iş sağlık yönetimi">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 08 · Nisan 2026</div>
+          <div class="post-card-title">Sağlık Yönetimi Mezunu Ne İş Yapar?</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Kariyer</span>
+          <div class="post-card-excerpt">"Sağlık yönetimi okuyorsun, doktor mu olacaksın?" Bu soruyu en az yüz kez duymuşsunuzdur. Cevap tahmin ettiğinizden çok daha geniş.</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card" onclick="openPost(8)" data-keywords="telemedicine uzaktan tıp dijital türkiye">
+        <div class="post-card-top">
+          <div class="post-card-num">YAZI 09 · Nisan 2026</div>
+          <div class="post-card-title">Telemedicine: Türkiye'nin Geri Kaldığı Cephe</div>
+        </div>
+        <div class="post-card-body">
+          <span class="post-card-cat">Dijital Sağlık</span>
+          <div class="post-card-excerpt">COVID-19 pandemisi dünya genelinde telemedicine kullanımını patlatırken Türkiye bu trendi tam olarak yakalayamadı. Neden?</div>
+          <div class="post-card-footer">
+            <span class="post-card-time">Nisan 2026</span>
+            <span class="post-card-read">Oku →</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FEATURED ARTICLE -->
 <section class="section" id="yazi" style="background:var(--cream);">
   <div class="container">
@@ -1551,6 +1775,12 @@
 
           <div class="cta-comment">
             <p>💬 <strong>Siz ne düşünüyorsunuz?</strong> Türkiye sağlık sisteminin en kritik sorunu sizce hangisi? Aşağıya yorum bırakın veya bu yazıyı bir sağlık öğrencisiyle paylaşın — tartışmak için daha iyi bir konu bulmak zor!</p>
+          </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Türkiye'de Sağlık Sisteminin Yapısı ve Güncel Sorunlar')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Türkiye'de Sağlık Sisteminin Yapısı ve Güncel Sorunlar')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Türkiye'de Sağlık Sisteminin Yapısı ve Güncel Sorunlar')">🔗 Link Kopyala</a>
           </div>
 
         </div>
@@ -1687,6 +1917,12 @@
         <div class="cta-comment">
           <p>💬 <strong>Siz ne düşünüyorsunuz?</strong> Şehir hastaneleri gerçek bir çözüm mü yoksa ertelenmiş bir mali sorun mu? Yorumlarınızı bekliyorum!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Şehir Hastaneleri: Devrim mi, Borç Tuzağı mı?')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Şehir Hastaneleri: Devrim mi, Borç Tuzağı mı?')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Şehir Hastaneleri: Devrim mi, Borç Tuzağı mı?')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -1738,6 +1974,12 @@
         <div class="cta-comment">
           <p>💬 <strong>e-Nabız'ı aktif kullanıyor musunuz?</strong> Dijital sağlık uygulamaları hakkındaki deneyimlerinizi yorumlarda paylaşın!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'e-Nabız'dan Yapay Zeka'ya: Sağlıkta Dijital Dönüşüm')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'e-Nabız'dan Yapay Zeka'ya: Sağlıkta Dijital Dönüşüm')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'e-Nabız'dan Yapay Zeka'ya: Sağlıkta Dijital Dönüşüm')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -1786,6 +2028,12 @@
         <div class="cta-comment">
           <p>💬 <strong>Siz de staj deneyimlerinizi paylaşmak ister misiniz?</strong> Hangi bölümde staj yaptınız, neler öğrendiniz? Yorumlarda buluşalım!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Staj Günlüğü: İlk Haftam Hastanede')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Staj Günlüğü: İlk Haftam Hastanede')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Staj Günlüğü: İlk Haftam Hastanede')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -1842,6 +2090,12 @@
         <div class="cta-comment">
           <p>💬 <strong>SGK reformu için en öncelikli adım sizce ne olmalı?</strong> Düşüncelerinizi paylaşın!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'SGK'nın Sürdürülebilirliği: Veriler Ne Söylüyor?')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'SGK'nın Sürdürülebilirliği: Veriler Ne Söylüyor?')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'SGK'nın Sürdürülebilirliği: Veriler Ne Söylüyor?')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -1890,6 +2144,12 @@
         <div class="cta-comment">
           <p>💬 <strong>Sağlık hizmetinden yararlanırken haklarınızı biliyor musunuz?</strong> Deneyimlerinizi yorumlarda paylaşın!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Hasta Hakları Kanunu: Kâğıtta mı, Pratikte mi?')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Hasta Hakları Kanunu: Kâğıtta mı, Pratikte mi?')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Hasta Hakları Kanunu: Kâğıtta mı, Pratikte mi?')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -1934,6 +2194,12 @@
         <div class="cta-comment">
           <p>💬 <strong>Bu haftanın hangi haberi sizi en çok düşündürdü?</strong> Yorumlarda paylaşın!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Bu Haftanın Sağlık Haberleri Özeti')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Bu Haftanın Sağlık Haberleri Özeti')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Bu Haftanın Sağlık Haberleri Özeti')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -1987,6 +2253,12 @@
         <div class="cta-comment">
           <p>💬 <strong>Hangi kariyer alanına yönelmek istiyorsunuz?</strong> Yorumlarda paylaşın, birlikte konuşalım!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Sağlık Yönetimi Mezunu Ne İş Yapar?')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Sağlık Yönetimi Mezunu Ne İş Yapar?')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Sağlık Yönetimi Mezunu Ne İş Yapar?')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
@@ -2038,6 +2310,12 @@
         <div class="cta-comment">
           <p>💬 <strong>Telemedicine hizmetini kullandınız mı?</strong> Deneyimlerinizi ve görüşlerinizi yorumlarda paylaşın!</p>
         </div>
+          <div class="share-buttons">
+            <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center;">Paylaş:</span>
+            <a class="share-btn share-twitter" href="javascript:void(0)" onclick="sharePost('twitter', 'Telemedicine: Türkiye'nin Geri Kaldığı Cephe')">𝕏 Twitter</a>
+            <a class="share-btn share-whatsapp" href="javascript:void(0)" onclick="sharePost('whatsapp', 'Telemedicine: Türkiye'nin Geri Kaldığı Cephe')">💬 WhatsApp</a>
+            <a class="share-btn share-copy" href="javascript:void(0)" onclick="sharePost('copy', 'Telemedicine: Türkiye'nin Geri Kaldığı Cephe')">🔗 Link Kopyala</a>
+          </div>
       </div>
     </article>
 
